@@ -3,7 +3,7 @@ import { galleryItems } from "./gallery-items.js";
 
 console.log(galleryItems);
 
-//1. Створення і рендер розмітки на підставі масиву даних galleryItems 
+// 1. Створення і рендер розмітки на підставі масиву даних galleryItems 
 //і наданого шаблону елемента галереї
 
 const galleryList = document.querySelector(".gallery");
@@ -26,7 +26,7 @@ const galleryListItem = galleryItems
 
 galleryList.insertAdjacentHTML('beforeend', galleryListItem);
 
-//2. Реалізація делегування на ul.gallery і отримання url великого зображення.
+// 2. Реалізація делегування на ul.gallery і отримання url великого зображення.
 // 3. Підключення скрипту і стилів бібліотеки модального вікна basicLightbox. 
 // Використовуй CDN сервіс jsdelivr і додай у проект посилання 
 // на мініфіковані(.min) файли бібліотеки.
@@ -41,6 +41,8 @@ function openOriginalImage(event) {
         return
     }
 
+    document.addEventListener('keydown', closeModalonEsc);
+
     const originalImage = event.target.dataset.source;
     // console.log(originalImage);
     modalImage = basicLightbox.create(`
@@ -51,19 +53,12 @@ function openOriginalImage(event) {
 
 //close on esc =================================================
 
-const isOpenModalImage = true;
-
-if (isOpenModalImage) {
     function closeModalonEsc(e) {
         e.preventDefault();
         if (e.key === 'Escape') {
             modalImage.close();
+            document.removeEventListener('keydown', closeModalonEsc);
         }
     }
-
-    document.addEventListener('keydown', closeModalonEsc);
-} else if (!isOpenModalImage) {
-    document.removeEventListener('keydown', closeModalonEsc);
-}
 
 
